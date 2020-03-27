@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #weightError{
+            display: none;
+        }
+
+        #heightError{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <script>
+        function calcBMI(weight, height){
+            return weight / (height * height) * 10000 // (height/100)^2
+        }
+
+        function checkInput(parameter, min, max, errorElement){
+
+            let errorParagraph = document.getElementById(errorElement)
+
+            if(parameter >= min && parameter <= max){
+                errorParagraph.style.display = 'none'
+                return true
+            }  else {
+                errorParagraph.style.display = 'block'
+                return false
+            }
+        }
+
+
+        function checkBMI(){
+            let weight = document.getElementById('weight').value;
+            let height = document.getElementById('height').value;
+            let result;
+
+            if ( 
+                checkInput(weight, 30, 200, 'weightError') || 
+                checkInput(height, 120, 220, 'heightError') 
+            ) {
+
+                let BMIResult = calcBMI(weight,height);
+                
+
+                switch (true) {
+                    
+                    case BMIResult <= 18.5:
+                    document.write ('דירוג - תת משקל ------- סיכון לחלות במחלות - סיכון לתת תזונה')
+                    break;
+
+                    case BMIResult > 18.5 && BMIResult <= 25:
+                    document.write ('דירוג - משקל תקין ------- סיכון לחלות במחלות - סיכון נמוך באופן יחסי')
+                    break;
+
+                    case BMIResult > 25 && BMIResult <= 29.9:
+                    document.write ('דירוג - משקל עודף ------- סיכון לחלות במחלות - מוגבר כאשר יש מחלות נלוות')
+                    break;
+
+                    case BMIResult >= 30 && BMIResult <= 34.9:
+                    document.write ('דירוג - השמנה דרגה 1 ------- סיכון לחלות במחלות - בינוני')
+                    break;
+
+                    case BMIResult >= 35 && BMIResult <= 39.9:
+                    document.write ('דירוג - השמנה דרגה 2 ------- סיכון לחלות במחלות - חמור')
+                    break;
+
+                    case BMIResult >= 40:
+                    document.write ('דירוג - השמנה דרגה 3 ------- סיכון לחלות במחלות - חמור מאוד')
+                    break;
+
+                    default:
+                    document.write ('מווותתת')
+
+
+                }
+            }
+        }
+    </script>
+    
+    Weight:  <input type="text" id="weight"/>
+    <p id="weightError"  style="display: none;">שדה משקל לא חוקי</p>
+   
+    <br>
+   
+    Height: <input type="text" id="height"/>
+    <p id="heightError">שדה גובה לא חוקי</p>
+
+
+    <br>
+    
+    <button type="button" onclick="checkBMI()">
+        Calculate your BMI
+    </button>
+    <p id="result"></p>
+    
+</body>
+</html>
